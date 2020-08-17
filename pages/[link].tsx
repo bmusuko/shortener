@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { getAllLink } from "../helper/getAllLink";
 import { getOneLink } from "../helper/getOneLink";
-import mitt from "next/dist/next-server/lib/mitt";
 
 export async function getStaticPaths() {
   const links = await getAllLink();
