@@ -1,9 +1,9 @@
 import { NextApiResponse, NextApiRequest } from "next";
-import { dbConnect } from "../../../server/utils/dbConnect";
+import { dbConnect } from "../../../utils/dbConnect";
 import Joi from "@hapi/joi";
-import { responseGenerator } from "../../../server/utils/responseGenerator";
-import { Shortener } from "../../../server/models/Shortener";
-import { isLinkAvailable } from "../../../server/utils/isLinkAvailable";
+import { responseGenerator } from "../../../utils/responseGenerator";
+import { Shortener } from "../../../models/Shortener";
+import { isLinkAvailable } from "../../../utils/isLinkAvailable";
 import randomstring from "randomstring";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

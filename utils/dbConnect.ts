@@ -4,6 +4,12 @@ const dbConnect = async () => {
   console.log(process.env.MONGO_URI);
   try {
     switch (mongoose.connection.readyState) {
+      /* ready state 
+        0 = disconnected 
+        1 = connected 
+        2 = connecting 
+        3 = disconnecting 
+      */
       case 1:
       case 2:
         return;
