@@ -1,34 +1,29 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { getAllLink } from "../helper/getAllLink";
 import { getOneLink } from "../helper/getOneLink";
+import Error from "next/error";
 
-export async function getStaticPaths() {
-  const links = await getAllLink();
-  let paths = [];
-  if (links) {
-    paths = links.data.map((token) => ({
-      params: { link: token.generated_link },
-    }));
-  }
-
-  // fallback: false means pages that don’t have the
-  // correct id will 404.
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
+export const getServerSideProps = async (context) => {
+  const { link } = context.params;
   return {
     props: {
-      link: (await getOneLink(params.link))["data"],
+      link: (await getOneLink(link))["data"] || null,
     },
   };
-}
+};
 
 export default function Link({ link }) {
   const router = useRouter();
   useEffect(() => {
-    window.location.replace(link["real_link"]);
+    if (link) {
+      window.location.replace(link["real_link"]);
+    }
   }, []);
+  if (router.isFallback) {
+    return <div>Loading....</div>;
+  }
+  if (!link) {
+    return <Error statusCode={404} />;
+  }
   return <a href={link["real_link"]}>Redirecting to {link["real_link"]}</a>;
 }
