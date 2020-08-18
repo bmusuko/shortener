@@ -28,7 +28,7 @@ export async function getStaticProps({ params }) {
 export default function Link({ link }) {
   const router = useRouter();
   useEffect(() => {
-    router.push(link["real_link"]);
+    window.location.replace(link["real_link"]);
   }, []);
   return <a href={link["real_link"]}>Redirecting to {link["real_link"]}</a>;
 }

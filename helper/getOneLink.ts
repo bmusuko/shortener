@@ -5,7 +5,7 @@ interface RequestType {
 }
 
 async function getOneLink(token: string) {
-  const API_URL = `${process.env.APP_URI}/api/short/?link=${token}`;
+  const API_URL = `${process.env.NEXT_PUBLIC_APP_URI}/api/short/?link=${token}`;
   const request: RequestType = {
     method: "GET",
     headers: { "Content-type": "application/json" },

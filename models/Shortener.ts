@@ -10,6 +10,14 @@ const ShortenerSchema = new mongoose.Schema({
     required: true,
   },
   updated_at: { type: Date, default: Date.now },
+  is_password: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
+  password: {
+    type: String,
+  },
 });
 
 const Shortener =

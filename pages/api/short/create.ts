@@ -7,13 +7,13 @@ import { isLinkAvailable } from "../../../utils/isLinkAvailable";
 import randomstring from "randomstring";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { method, query } = req;
+  const { method } = req;
   switch (method) {
     case "POST": // get real link
       await dbConnect();
       const schema = Joi.object({
         real_link: Joi.string().uri(),
-        desired_link: Joi.string().alphanum(),
+        desired_link: Joi.string().regex(/^([a-zA-Z0-9_-]+)$/), // alphanumeric + dash + underline
       });
       const options = {
         abortEarly: false, // include all errors
@@ -39,7 +39,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }
       } else {
         if (!(await isLinkAvailable(desired_link))) {
-          return responseGenerator(res, 400, "link already taken");
+          return responseGenerator(res, 409, "link already taken");
         }
       }
       try {

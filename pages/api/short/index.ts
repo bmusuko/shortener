@@ -31,7 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       const realLink = await Shortener.findOne(
         { generated_link: link },
-        { _id: 0, __v: 0, updated_at: 0, generated_link: 0 }
+        { _id: 0, __v: 0, updated_at: 0, generated_link: 0, password: 0 }
       ).exec();
       if (!realLink) {
         return responseGenerator(res, 404, "link not found");

@@ -1,6 +1,11 @@
 # Shortener
 Yet another URL Shortener
 
+## Feature 
+- Shorten URL
+- Custom URL
+- Password protected URL
+
 ## How to Use
 - Just go to `/` for demo you can go to [TBD]
 

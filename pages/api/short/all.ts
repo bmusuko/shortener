@@ -12,7 +12,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const all_link = await Shortener.find(
           {},
-          { _id: 0, __v: 0, updated_at: 0, real_link: 0 }
+          {
+            _id: 0,
+            __v: 0,
+            updated_at: 0,
+            real_link: 0,
+            is_password: 0,
+            password: 0,
+          }
         );
         return responseGenerator(res, 200, "success", all_link);
       } catch {

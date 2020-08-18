@@ -5,7 +5,7 @@ interface RequestType {
 }
 
 async function getAllLink() {
-  const API_URL = process.env.APP_URI + "/api/short/all";
+  const API_URL = process.env.NEXT_PUBLIC_APP_URI + "/api/short/all";
   const request: RequestType = {
     method: "GET",
     headers: { "Content-type": "application/json" },
