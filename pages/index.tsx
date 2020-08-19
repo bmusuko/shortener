@@ -20,6 +20,8 @@ import clsx from "clsx";
 import { useState } from "react";
 import { createShortener } from "../helper/createShortener";
 import { ShortenerForm } from "../models/Form";
+import { useToasts, ToastProvider } from "react-toast-notifications";
+import copy from "copy-to-clipboard";
 const buttonWidth = 100;
 
 const GlobalCss = withStyles({
@@ -75,23 +77,42 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Home() {
+function HomeWithToast() {
   const classes = useStyles();
   const { register, handleSubmit, errors, setValue } = useForm<ShortenerForm>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState(null);
-  const sleep = (m) => new Promise((r) => setTimeout(r, m));
+  const { addToast } = useToasts();
+  const getGeneratedLink = (): string => {
+    return `${process.env.NEXT_PUBLIC_APP_URI}/${data.generated_link}`;
+  };
   const onSubmit = async (data: ShortenerForm) => {
     try {
       setIsLoading(true);
       const response = await createShortener(data);
       setData(response.data);
-      console.log(response);
+      if (response.status !== 200) {
+        addToast(response.message, {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      }
       setIsLoading(false);
     } catch (e) {
+      // for some reason not working
       setIsLoading(false);
-      console.log(e.message);
+      addToast(e.message, {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
+  };
+  const handleCopy = () => {
+    copy(getGeneratedLink());
+    addToast("Copied to Clipboard!", {
+      appearance: "success",
+      autoDismiss: true,
+    });
   };
   return (
     <>
@@ -155,6 +176,9 @@ export default function Home() {
                 >
                   {isLoading ? <CircularProgress /> : "Submit"}
                 </Button>
+                {Boolean(errors.URL) && (
+                  <Typography color="error">{errors.URL.message}</Typography>
+                )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -179,8 +203,11 @@ export default function Home() {
                       </InputAdornment>
                     ),
                   }}
-                  error={Boolean(errors.URL)}
+                  error={Boolean(errors.custom)}
                 />
+                {Boolean(errors.custom) && (
+                  <Typography color="error">{errors.custom.message}</Typography>
+                )}
               </Grid>
             </Grid>
             {data && (
@@ -196,19 +223,19 @@ export default function Home() {
                     justify="space-between"
                     alignItems="center"
                   >
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <Typography variant="body1">{data.real_link}</Typography>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12}>
                       <Typography className={classes.inline} variant="body1">
-                        <Link
-                          href={`${process.env.NEXT_PUBLIC_APP_URI}/${data.generated_link}`}
-                        >
-                          {process.env.NEXT_PUBLIC_APP_URI}/
-                          {data.generated_link}
+                        <Link href={`${getGeneratedLink()}`}>
+                          {getGeneratedLink()}
                         </Link>
                       </Typography>
-                      <IconButton className={classes.inline}>
+                      <IconButton
+                        className={classes.inline}
+                        onClick={handleCopy}
+                      >
                         <FileCopyRoundedIcon fontSize="small" />
                       </IconButton>
                     </Grid>
@@ -221,5 +248,13 @@ export default function Home() {
         </form>
       </Paper>
     </>
+  );
+}
+
+export default function Home() {
+  return (
+    <ToastProvider>
+      <HomeWithToast />
+    </ToastProvider>
   );
 }

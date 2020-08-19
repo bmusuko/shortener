@@ -16,7 +16,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       };
 
       const schema = Joi.object({
-        link: Joi.string().alphanum().required(),
+        link: Joi.string()
+          .regex(/^([a-zA-Z0-9_-]+)$/)
+          .required(),
       });
 
       const { error } = schema.validate(query, options);

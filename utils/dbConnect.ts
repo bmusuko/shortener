@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const dbConnect = async () => {
-  console.log(process.env.MONGO_URI);
   try {
     switch (mongoose.connection.readyState) {
       /* ready state 

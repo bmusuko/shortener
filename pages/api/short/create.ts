@@ -4,7 +4,7 @@ import Joi from "@hapi/joi";
 import { responseGenerator } from "../../../utils/responseGenerator";
 import { Shortener } from "../../../models/Shortener";
 import { isLinkAvailable } from "../../../utils/isLinkAvailable";
-import randomstring from "randomstring";
+import randomWords from "random-words";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -26,13 +26,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
       const real_link: string = req.body.real_link;
       let desired_link: string | undefined = req.body.desired_link;
-      let random_link_length = 5;
       if (!desired_link) {
         while (true) {
-          desired_link = randomstring.generate({
-            length: random_link_length,
-            charset: "alphanumeric",
-          });
+          desired_link = randomWords({ exactly: 2, join: "-" });
           if (await isLinkAvailable(desired_link)) {
             break;
           }
