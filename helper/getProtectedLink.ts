@@ -1,4 +1,4 @@
-import { ShortenerForm } from "../models/Form";
+import { PasswordForm } from "../models/Form";
 
 interface RequestType {
   method: string;
@@ -6,17 +6,12 @@ interface RequestType {
   body?: string;
 }
 
-async function createShortener(data: ShortenerForm) {
+async function getProtectedLink(data: PasswordForm) {
   let body = {
-    real_link: data.URL,
+    desired_link: data.token,
+    password: data.password,
   };
-  if (data.custom) {
-    body["desired_link"] = data.custom;
-  }
-  if (data.password) {
-    body["password"] = data.password;
-  }
-  const API_URL = process.env.NEXT_PUBLIC_APP_URI + "/api/short/create";
+  const API_URL = process.env.NEXT_PUBLIC_APP_URI + "/api/short/protected";
   const request: RequestType = {
     method: "POST",
     headers: { "Content-type": "application/json" },
@@ -30,4 +25,4 @@ async function createShortener(data: ShortenerForm) {
   }
 }
 
-export { createShortener };
+export { getProtectedLink };

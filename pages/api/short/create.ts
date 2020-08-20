@@ -5,6 +5,7 @@ import { responseGenerator } from "../../../utils/responseGenerator";
 import { Shortener } from "../../../models/Shortener";
 import { isLinkAvailable } from "../../../utils/isLinkAvailable";
 import randomWords from "random-words";
+import bcrypt from "bcryptjs";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -12,8 +13,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     case "POST": // get real link
       await dbConnect();
       const schema = Joi.object({
-        real_link: Joi.string().uri(),
+        real_link: Joi.string().uri().required(),
         desired_link: Joi.string().regex(/^([a-zA-Z0-9_-]+)$/), // alphanumeric + dash + underline
+        password: Joi.string(),
       });
       const options = {
         abortEarly: false, // include all errors
@@ -35,16 +37,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }
       } else {
         if (!(await isLinkAvailable(desired_link))) {
-          return responseGenerator(res, 409, "link already taken");
+          return responseGenerator(res, 409, "link is already taken");
         }
       }
       try {
-        const shortener_model = new Shortener({
+        let body = {
           generated_link: desired_link,
           real_link: real_link,
-        });
+        };
+        if (req.body.password) {
+          const salt = await bcrypt.genSalt(10);
+          const hashedPassword = await bcrypt.hash(req.body.password, salt);
+          body["is_password"] = true;
+          body["password"] = hashedPassword;
+        }
+        const shortener_model = new Shortener(body);
         const saved_model = await shortener_model.save();
-        return responseGenerator(res, 200, "link is saved", saved_model);
+        return responseGenerator(res, 200, "link is saved", {
+          generated_link: saved_model["generated_link"],
+          is_password: saved_model["is_password"],
+        });
       } catch {
         return responseGenerator(res, 500, "unexpected error");
       }

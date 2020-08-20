@@ -30,7 +30,7 @@ Yet another URL Shortener
 
 - [x] Set Initial Shortener App
 - [x] Handle error
-- [ ] Add password protection
+- [x] Add password protection
 - [ ] Add share button
 
 ## Stack

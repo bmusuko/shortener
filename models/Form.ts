@@ -1,5 +1,10 @@
 interface ShortenerForm {
   URL: String;
   custom?: String;
+  password?: String;
 }
-export { ShortenerForm };
+interface PasswordForm {
+  password: String;
+  token: String;
+}
+export { ShortenerForm, PasswordForm };

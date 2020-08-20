@@ -38,6 +38,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       if (!realLink) {
         return responseGenerator(res, 404, "link not found");
       }
+      if (realLink["is_password"]) {
+        return responseGenerator(res, 200, "get link", {
+          is_password: true,
+        });
+      }
       return responseGenerator(res, 200, "get link", realLink);
     default:
       res.setHeader("Allow", ["GET"]);
