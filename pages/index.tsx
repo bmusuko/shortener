@@ -15,6 +15,7 @@ import {
 import FileCopyRoundedIcon from "@material-ui/icons/FileCopyRounded";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
+import FacebookIcon from "@material-ui/icons/Facebook";
 import LockRoundedIcon from "@material-ui/icons/LockRounded";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
@@ -304,6 +305,9 @@ function HomeWithToast() {
                       </IconButton>
                       <IconButton href={`https://api.whatsapp.com/send?text=${getGeneratedLink()}`} target="_blank" rel="noopener noreferrer">
                         <WhatsAppIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton href={`https://www.facebook.com/sharer/sharer.php?u=${getGeneratedLink()}`} target="_blank" rel="noopener noreferrer">
+                        <FacebookIcon fontSize="small" />
                       </IconButton>
                     </Grid>
                   </Grid>
