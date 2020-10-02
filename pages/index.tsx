@@ -13,6 +13,8 @@ import {
   withStyles,
 } from "@material-ui/core";
 import FileCopyRoundedIcon from "@material-ui/icons/FileCopyRounded";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import LockRoundedIcon from "@material-ui/icons/LockRounded";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
@@ -70,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
   },
   inline: {
     display: "inline-block",
+  },
+  icons: {
+    marginLeft: "1rem",
   },
   link: {
     [theme.breakpoints.up("sm")]: {
@@ -284,20 +289,24 @@ function HomeWithToast() {
                   justify="space-between"
                   alignItems="center"
                 >
-                  {/* <Grid item xs={12}>
-                      <Typography variant="body1">{data.real_link}</Typography>
-                    </Grid> */}
                   <Grid item xs={12}>
                     <Typography className={classes.inline} variant="body1">
                       <Link href={`${getGeneratedLink()}`}>
                         {getGeneratedLink()}
                       </Link>
                     </Typography>
-                    <IconButton className={classes.inline} onClick={handleCopy}>
-                      <FileCopyRoundedIcon fontSize="small" />
-                    </IconButton>
+                    <Grid item xs={12} className={`${classes.inline} ${classes.icons}`}>
+                      <IconButton onClick={handleCopy}>
+                        <FileCopyRoundedIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton href={`https://twitter.com/intent/tweet?text=${getGeneratedLink()}`} target="_blank" rel="noopener noreferrer">
+                        <TwitterIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton href={`https://api.whatsapp.com/send?text=${getGeneratedLink()}`} target="_blank" rel="noopener noreferrer">
+                        <WhatsAppIcon fontSize="small" />
+                      </IconButton>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12}></Grid>
                 </Grid>
               </Card>
             </Grid>
