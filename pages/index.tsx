@@ -16,6 +16,7 @@ import FileCopyRoundedIcon from "@material-ui/icons/FileCopyRounded";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import FacebookIcon from "@material-ui/icons/Facebook";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import LockRoundedIcon from "@material-ui/icons/LockRounded";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
@@ -336,6 +337,12 @@ function HomeWithToast() {
                       rel="noopener noreferrer"
                     >
                       <FacebookIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton href={`https://www.linkedin.com/shareArticle?url=${getGeneratedLink()}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <LinkedInIcon fontSize="small" />
                     </IconButton>
                   </Grid>
                 </Grid>
