@@ -18,6 +18,9 @@ const ShortenerSchema = new mongoose.Schema({
   password: {
     type: String,
   },
+  visitCount: {
+    type: Number
+  },
 });
 
 const Shortener =
