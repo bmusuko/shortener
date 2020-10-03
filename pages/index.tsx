@@ -74,9 +74,6 @@ const useStyles = makeStyles((theme) => ({
   inline: {
     display: "inline-block",
   },
-  icons: {
-    marginLeft: "1rem",
-  },
   link: {
     [theme.breakpoints.up("sm")]: {
       paddingRight: "1rem",
@@ -86,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       paddingLeft: "1rem",
     },
+  },
+  shareContainer: {
+    paddingTop: "1rem",
   },
 }));
 
@@ -291,25 +291,52 @@ function HomeWithToast() {
                   alignItems="center"
                 >
                   <Grid item xs={12}>
-                    <Typography className={classes.inline} variant="body1">
+                    <Typography
+                      className={`${classes.inline} ${classes.fullWidth}`}
+                      align="center"
+                      variant="h5"
+                    >
                       <Link href={`${getGeneratedLink()}`}>
                         {getGeneratedLink()}
                       </Link>
                     </Typography>
-                    <Grid item xs={12} className={`${classes.inline} ${classes.icons}`}>
-                      <IconButton onClick={handleCopy}>
-                        <FileCopyRoundedIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton href={`https://twitter.com/intent/tweet?text=${getGeneratedLink()}`} target="_blank" rel="noopener noreferrer">
-                        <TwitterIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton href={`https://api.whatsapp.com/send?text=${getGeneratedLink()}`} target="_blank" rel="noopener noreferrer">
-                        <WhatsAppIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton href={`https://www.facebook.com/sharer/sharer.php?u=${getGeneratedLink()}`} target="_blank" rel="noopener noreferrer">
-                        <FacebookIcon fontSize="small" />
-                      </IconButton>
-                    </Grid>
+                  </Grid>
+                  <Typography
+                    align="center"
+                    className={`${classes.fullWidth} ${classes.shareContainer}`}
+                    variant="h6"
+                  >
+                    Share this link on:
+                  </Typography>
+                  <Grid
+                    item
+                    xs={12}
+                    className={`${classes.inline} ${classes.center}`}
+                  >
+                    <IconButton onClick={handleCopy}>
+                      <FileCopyRoundedIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      href={`https://twitter.com/intent/tweet?text=${getGeneratedLink()}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TwitterIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      href={`https://api.whatsapp.com/send?text=${getGeneratedLink()}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <WhatsAppIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${getGeneratedLink()}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FacebookIcon fontSize="small" />
+                    </IconButton>
                   </Grid>
                 </Grid>
               </Card>
