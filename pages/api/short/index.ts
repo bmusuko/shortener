@@ -38,6 +38,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       if (!realLink) {
         return responseGenerator(res, 404, "link not found");
       }
+      //Increment visitCount
+      await Shortener.findOneAndUpdate(
+        { generated_link: link },
+        { visitCount: ( realLink.visitCount || 0 ) + 1 }
+      );
+
       if (realLink["is_password"]) {
         return responseGenerator(res, 200, "get link", {
           is_password: true,
