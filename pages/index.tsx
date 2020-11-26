@@ -18,6 +18,7 @@ import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import LockRoundedIcon from "@material-ui/icons/LockRounded";
+import TelegramIcon from '@material-ui/icons/Telegram';
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import clsx from "clsx";
@@ -318,31 +319,37 @@ function HomeWithToast() {
                       <FileCopyRoundedIcon fontSize="small" />
                     </IconButton>
                     <IconButton
-                      href={`https://twitter.com/intent/tweet?text=${getGeneratedLink()}`}
+                      href={`https://twitter.com/intent/tweet?text=${encodeURI(getGeneratedLink())}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <TwitterIcon fontSize="small" />
                     </IconButton>
                     <IconButton
-                      href={`https://api.whatsapp.com/send?text=${getGeneratedLink()}`}
+                      href={`https://api.whatsapp.com/send?text=${encodeURI(getGeneratedLink())}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <WhatsAppIcon fontSize="small" />
                     </IconButton>
                     <IconButton
-                      href={`https://www.facebook.com/sharer/sharer.php?u=${getGeneratedLink()}`}
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(getGeneratedLink())}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <FacebookIcon fontSize="small" />
                     </IconButton>
-                    <IconButton href={`https://www.linkedin.com/shareArticle?url=${getGeneratedLink()}`}
+                    <IconButton href={`https://www.linkedin.com/shareArticle?url=${encodeURI(getGeneratedLink())}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <LinkedInIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton href={`https://t.me/share/url?url=${encodeURI(getGeneratedLink())}&text=${encodeURI(getGeneratedLink())}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TelegramIcon fontSize="small" />
                     </IconButton>
                   </Grid>
                 </Grid>
