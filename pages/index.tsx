@@ -345,7 +345,7 @@ function HomeWithToast() {
                     >
                       <LinkedInIcon fontSize="small" />
                     </IconButton>
-                    <IconButton href={`https://t.me/share/url?url=${encodeURI(getGeneratedLink())}&text=${encodeURI(getGeneratedLink())}`}
+                    <IconButton href={`https://t.me/share/url?url=${encodeURI(getGeneratedLink())}}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
